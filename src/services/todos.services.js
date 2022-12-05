@@ -1,3 +1,4 @@
+const boom = require("@hapi/boom");
 const data = [
   {
     id: 1,
@@ -38,7 +39,7 @@ class TodosServices {
   async getOne(todoId) {
     const todo = this.todos.find((todo) => todoId === todo.id);
     if (!todo) {
-      throw new Error("Not found");
+      throw boom.notFound("Not found");
     }
     return todo;
   }
@@ -55,7 +56,7 @@ class TodosServices {
   async update(todoId, data) {
     const index = this.todos.findIndex((todo) => todoId === todo.id);
     if (index === -1) {
-      throw new Error("Not found");
+      throw boom.notFound("Not found");
     }
     const originalTodo = this.todos[index];
     this.todos[index] = {
@@ -68,7 +69,7 @@ class TodosServices {
   async delete(todoId) {
     const index = this.todos.findIndex((todo) => todoId === todo.id);
     if (index === -1) {
-      throw new Error("Not found");
+      throw boom.notFound("Not found");
     }
     this.todos.splice(index, 1);
     return todoId;
