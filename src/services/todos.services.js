@@ -1,5 +1,6 @@
 const boom = require("@hapi/boom");
 const getConnection = require("../libs/postgres");
+const pool = require("../libs/postgres.pool");
 const data = [
   {
     id: 1,
@@ -27,6 +28,8 @@ const data = [
 class TodosServices {
   constructor() {
     this.todos = data;
+    this.pool = pool;
+    this.pool.on("error", (err) => console.error(err));
   }
 
   async getAll() {
@@ -77,9 +80,10 @@ class TodosServices {
   }
 
   async prueba() {
-    const client = await getConnection();
-    const response = await client.query("SELECT *FROM prueba");
-    return response.rows;
+    //const client = await getConnection();
+    const query = "select *from prueba";
+    const response = await this.pool.query(query);
+  return response.rows; 
   }
 }
 
