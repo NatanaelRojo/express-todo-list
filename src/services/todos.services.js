@@ -1,4 +1,5 @@
 const boom = require("@hapi/boom");
+const getConnection = require("../libs/postgres");
 const data = [
   {
     id: 1,
@@ -73,6 +74,12 @@ class TodosServices {
     }
     this.todos.splice(index, 1);
     return todoId;
+  }
+
+  async prueba() {
+    const client = await getConnection();
+    const response = await client.query("SELECT *FROM prueba");
+    return response.rows;
   }
 }
 

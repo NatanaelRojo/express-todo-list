@@ -20,6 +20,12 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.get("/prueba", async (req, res) => {
+  const data = await controller.prueba();
+  console.log(data);
+  res.json(data);
+});
+
 router.get(
   "/:id",
   validatorHandler(getTodoSchema, "params"),
