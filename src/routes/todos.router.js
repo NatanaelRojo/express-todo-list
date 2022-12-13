@@ -5,9 +5,9 @@ const {
   createTodoSchema,
   updateTodoSchema,
 } = require("../schemas/todo.schema");
-const TodosServices = require("../services/todos.services");
+const TodosController = require("../services/todos.controller");
 
-const controller = new TodosServices();
+const controller = new TodosController();
 
 const router = express.Router();
 
