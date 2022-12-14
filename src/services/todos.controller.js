@@ -12,7 +12,7 @@ class TodosController {
   }
 
   async getOne(todoId) {
-    const todo = await models.Todo.findByPk(todoId);
+    const todo = await models.Todo.findByPk(todoId, { include: ["user"] });
     if (!todo) {
       throw boom.notFound("Not found");
     }

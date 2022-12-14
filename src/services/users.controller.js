@@ -12,7 +12,7 @@ class UsersController {
   }
 
   async getOne(userId) {
-    const user = await models.User.findByPk(userId);
+    const user = await models.User.findByPk(userId, { include: ["todos"] });
     if (!user) {
       throw boom.notFound("User not found");
     }

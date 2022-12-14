@@ -1,4 +1,5 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
+const { USER_TABLE } = require("./user.model");
 
 const TODOS_TABLE = "todos";
 
@@ -8,6 +9,17 @@ const todoSchema = {
     autoIncrement: true,
     type: DataTypes.INTEGER,
     primaryKey: true,
+  },
+  userId: {
+    field: "user_id",
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: USER_TABLE,
+      key: "id",
+    },
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
   },
   name: {
     allowNull: false,
@@ -35,6 +47,10 @@ const todoSchema = {
 };
 
 class Todo extends Model {
+  static associate(models) {
+    this.belongsTo(models.User, { as: "user" });
+  }
+
   static config(sequelize) {
     return {
       sequelize,

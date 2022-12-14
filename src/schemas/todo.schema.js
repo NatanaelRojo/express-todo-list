@@ -1,12 +1,14 @@
 const joi = require("joi");
 
 const id = joi.number().integer();
+const userId = joi.number().integer();
 const name = joi.string().min(5);
 const description = joi.string().alphanum();
 const reminder = joi.bool();
 const completed = joi.bool();
 
 const createTodoSchema = joi.object({
+  userId: userId.required(),
   name: name.required(),
   description: description.optional(),
   reminder: reminder.required(),
