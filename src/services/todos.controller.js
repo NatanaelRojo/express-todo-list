@@ -1,4 +1,5 @@
 const boom = require("@hapi/boom");
+const { QueryTypes } = require("sequelize");
 const { models } = require("../libs/sequelize");
 
 class TodosController {
@@ -6,8 +7,14 @@ class TodosController {
     // empty
   }
 
-  async getAll() {
-    const todos = await models.Todo.findAll();
+  async getAll(query) {
+    const options = {};
+    const { limit, offset } = query;
+    if (limit && offset) {
+      options.limit = limit;
+      options.offset = offset;
+    }
+    const todos = await models.Todo.findAll(options);
     return todos;
   }
 
