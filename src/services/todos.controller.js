@@ -8,7 +8,7 @@ class TodosController {
   }
 
   async getAll(query) {
-    const options = {};
+    const options = { include: ["user"] };
     const { limit, offset } = query;
     if (limit && offset) {
       options.limit = limit;
