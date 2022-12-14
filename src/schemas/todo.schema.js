@@ -6,6 +6,8 @@ const name = joi.string().min(5);
 const description = joi.string().alphanum();
 const reminder = joi.bool();
 const completed = joi.bool();
+const limit = joi.number().integer();
+const offset = joi.number().integer();
 
 const createTodoSchema = joi.object({
   userId: userId.required(),
@@ -22,6 +24,14 @@ const updateTodoSchema = joi.object({
   completed: completed.optional(),
 });
 
+const getAllTodoSchema = joi.object({
+  limit: limit.optional(),
+  offset: offset.when("limit", {
+    is: joi.number().integer(),
+    then: joi.required(),
+  }),
+});
+
 const getTodoSchema = joi.object({
   id: id.required(),
 });
@@ -30,4 +40,5 @@ module.exports = {
   createTodoSchema,
   updateTodoSchema,
   getTodoSchema,
+  getAllTodoSchema,
 };

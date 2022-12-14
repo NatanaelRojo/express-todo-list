@@ -4,6 +4,7 @@ const {
   getTodoSchema,
   createTodoSchema,
   updateTodoSchema,
+  getAllTodoSchema,
 } = require("../schemas/todo.schema");
 const TodosController = require("../services/todos.controller");
 
@@ -11,14 +12,18 @@ const controller = new TodosController();
 
 const router = express.Router();
 
-router.get("/", async (req, res, next) => {
-  try {
-    const todos = await controller.getAll(req.query);
-    res.status(200).json(todos);
-  } catch (error) {
-    next(error);
+router.get(
+  "/",
+  validatorHandler(getAllTodoSchema, "query"),
+  async (req, res, next) => {
+    try {
+      const todos = await controller.getAll(req.query);
+      res.status(200).json(todos);
+    } catch (error) {
+      next(error);
+    }
   }
-});
+);
 
 router.get("/prueba", async (req, res) => {
   const data = await controller.prueba();
