@@ -13,7 +13,7 @@ const router = express.Router();
 
 router.get("/", async (req, res, next) => {
   try {
-    const todos = await controller.getAll();
+    const todos = await controller.getAll(req.query);
     res.status(200).json(todos);
   } catch (error) {
     next(error);
